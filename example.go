@@ -37,6 +37,7 @@ func (e Example) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg)
 	log.Debug("Received response")
 	log.Info("Received response")
 	fmt.Println("Received response")
+	clog.Infof("Received response")
 
 	// Wrap.
 	pw := NewResponsePrinter(w)
