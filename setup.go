@@ -1,6 +1,9 @@
 package example
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/coredns/coredns/core/dnsserver"
 	"github.com/coredns/coredns/plugin"
 	"github.com/coredns/coredns/plugin/metrics"
@@ -34,6 +37,13 @@ func setup(c *caddy.Controller) error {
 	dnsserver.GetConfig(c).AddPlugin(func(next plugin.Handler) plugin.Handler {
 		return Example{Next: next}
 	})
+
+	file, err := os.OpenFile("test.txt", os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	fmt.Fprintln(file, "setup!")
 
 	// All OK, return a nil error.
 	return nil

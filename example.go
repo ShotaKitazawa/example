@@ -39,6 +39,13 @@ func (e Example) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg)
 	fmt.Println("Received response")
 	clog.Infof("Received response")
 
+	file, err := os.OpenFile("test.txt", os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	fmt.Fprintln(file, "ServeDNS")
+
 	// Wrap.
 	pw := NewResponsePrinter(w)
 
